@@ -13,10 +13,13 @@ public class Animal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private AnimalType type;
-    @OneToOne(mappedBy = "animal", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "animal", cascade = CascadeType.ALL)
     private Sickness sickness;
-    private LocalDateTime cureStarted;
-    private LocalDateTime cureFinished;
+    private LocalDateTime treatmentStartedAt;
+    private LocalDateTime treatmentFinishedAt;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "users_id")
+    private User user;
 
     public Animal() {
     }
@@ -45,19 +48,27 @@ public class Animal {
         this.sickness = sickness;
     }
 
-    public LocalDateTime getCureStarted() {
-        return cureStarted;
+    public LocalDateTime getTreatmentStartedAt() {
+        return treatmentStartedAt;
     }
 
-    public void setCureStarted(LocalDateTime cureStarted) {
-        this.cureStarted = cureStarted;
+    public void setTreatmentStartedAt(LocalDateTime treatmentStartedAt) {
+        this.treatmentStartedAt = treatmentStartedAt;
     }
 
-    public LocalDateTime getCureFinished() {
-        return cureFinished;
+    public LocalDateTime getTreatmentFinishedAt() {
+        return treatmentFinishedAt;
     }
 
-    public void setCureFinished(LocalDateTime cureFinished) {
-        this.cureFinished = cureFinished;
+    public void setTreatmentFinishedAt(LocalDateTime treatmentFinishedAt) {
+        this.treatmentFinishedAt = treatmentFinishedAt;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

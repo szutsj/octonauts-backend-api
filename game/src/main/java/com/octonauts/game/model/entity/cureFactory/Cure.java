@@ -1,33 +1,34 @@
-package com.octonauts.game.model.entity;
+package com.octonauts.game.model.entity.cureFactory;
 
+import com.octonauts.game.model.entity.Octopod;
 import com.octonauts.game.model.entity.sicknessFactory.Sickness;
 import com.octonauts.game.model.enums.MedicineType;
 
 import javax.persistence.*;
 
-@Table(name = "Medicines")
+@Table(name = "Cures")
 @Entity
-public class Medicine {
+public class Cure {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private MedicineType type;
-    private int price;
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "octopods_id")
-    private Octopod octopod;
+    @JoinColumn(name = "sicknesses_id")
+    private Sickness sickness;
 
-    public Medicine(MedicineType type) {
+
+    public Cure(MedicineType type, Sickness sickness) {
         this.type = type;
+        this.sickness = sickness;
     }
 
-    public Medicine() {
+    public Cure() {
     }
 
-    public Medicine(MedicineType type, Octopod octopod) {
+    public Cure(MedicineType type, Octopod octopod) {
         this.type = type;
-        this.octopod = octopod;
     }
 
     public long getId() {
@@ -46,20 +47,11 @@ public class Medicine {
         this.type = type;
     }
 
-    public int getPrice() {
-        return price;
+    public Sickness getSickness() {
+        return sickness;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
+    public void setSickness(Sickness sickness) {
+        this.sickness = sickness;
     }
-
-    public Octopod getOctopod() {
-        return octopod;
-    }
-
-    public void setOctopod(Octopod octopod) {
-        this.octopod = octopod;
-    }
-
 }

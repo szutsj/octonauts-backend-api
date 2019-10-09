@@ -2,9 +2,10 @@ package com.octonauts.game.model.entity.sicknessFactory;
 
 import com.octonauts.game.model.enums.SicknessType;
 
-public class SicknessFactory {
 
-    public Sickness getSickness(SicknessType type){
+public abstract class SicknessFactory {
+
+    public static Sickness getSickness(SicknessType type){
         if (type.equals(SicknessType.FLU)){
             return new Flu(randomLevel());
         }
@@ -23,7 +24,7 @@ public class SicknessFactory {
         return null;
     }
 
-    public int randomLevel(){
+    private static int  randomLevel(){
         return (int)(Math.random() * 3) + 1;
     }
 

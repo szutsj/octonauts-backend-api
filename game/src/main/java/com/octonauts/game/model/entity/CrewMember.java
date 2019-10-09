@@ -14,7 +14,7 @@ public class CrewMember {
     private long id;
     private CrewMembers name;
     private boolean active;
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "octopods_id")
     private Octopod octopod;
 

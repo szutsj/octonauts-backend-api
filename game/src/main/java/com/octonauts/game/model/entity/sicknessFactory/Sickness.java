@@ -1,7 +1,7 @@
 package com.octonauts.game.model.entity.sicknessFactory;
 
 import com.octonauts.game.model.entity.Animal;
-import com.octonauts.game.model.entity.Medicine;
+import com.octonauts.game.model.entity.cureFactory.Cure;
 import com.octonauts.game.model.enums.SicknessType;
 
 import javax.persistence.*;
@@ -16,13 +16,18 @@ public abstract class Sickness {
     private SicknessType type;
     private int level;
     private int pointsGivenForCure;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sickness")
-    private List<Medicine> medicineList;
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sickness")
+    private List<Cure> cureList;
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "animals_id")
     private Animal animal;
 
     public Sickness() {
+    }
+
+    public Sickness(int level){
+        this.level = level;
+        this.pointsGivenForCure = level * 3;
     }
 
     public long getId() {
@@ -57,12 +62,12 @@ public abstract class Sickness {
         this.pointsGivenForCure = pointsGivenForCure;
     }
 
-    public List<Medicine> getMedicineList() {
-        return medicineList;
+    public List<Cure> getCureList() {
+        return cureList;
     }
 
-    public void setMedicineList(List<Medicine> medicineList) {
-        this.medicineList = medicineList;
+    public void setCureList(List<Cure> cureList) {
+        this.cureList = cureList;
     }
 
     public Animal getAnimal() {
@@ -73,5 +78,4 @@ public abstract class Sickness {
         this.animal = animal;
     }
 
-    public abstract List<Medicine> findMedicineForSicknessLevel();
 }

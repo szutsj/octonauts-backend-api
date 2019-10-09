@@ -1,6 +1,7 @@
 package com.octonauts.game.model.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Table(name = "users")
 @Entity
@@ -11,8 +12,10 @@ public class User  implements Comparable<User>{
     private String username;
     private String password;
     private int points;
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
     private Octopod octopod;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Animal> patientTreatedList;
 
     public User() {
     }
@@ -62,8 +65,17 @@ public class User  implements Comparable<User>{
         this.octopod = octopod;
     }
 
+    public List<Animal> getPatientTreatedList() {
+        return patientTreatedList;
+    }
+
+    public void setPatientTreatedList(List<Animal> patientTreatedList) {
+        this.patientTreatedList = patientTreatedList;
+    }
+
     @Override
     public int compareTo(User user) {
         return this.points - user.points;
     }
+
 }

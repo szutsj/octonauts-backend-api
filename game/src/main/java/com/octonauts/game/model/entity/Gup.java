@@ -13,7 +13,7 @@ public class Gup {
     private long id;
     private GupType type;
     private boolean active;
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "octopods_id")
     private Octopod octopod;
 

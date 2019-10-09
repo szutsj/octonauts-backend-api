@@ -9,14 +9,14 @@ public class Octopod {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "users_id")
     private User user;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "octopod")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "octopod")
     private List<CrewMember> crewMemberList;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "octopod")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "octopod")
     private List<Gup> gupList;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "octopod")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "octopod")
     private List<Medicine> medicineList;
 
     public Octopod() {
