@@ -16,8 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-
 @RestController
 public class AnimalController {
 
@@ -79,15 +77,10 @@ public class AnimalController {
             required = true, dataType = "string", paramType = "header")})
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK", response = PatientDTO.class),
             @ApiResponse(code = 410, message = "This animal is already under treatment!", response = ErrorMessage.class),
-            @ApiResponse(code = 404, message = "No user with such name found, problem with token!", response = ErrorMessage.class),
             @ApiResponse (code = 409, message = "No animal with such id found!", response = ErrorMessage.class)})
     @PutMapping("/octopod/cure/{id}")
     public ResponseEntity<Object> startTreatment(@PathVariable(name = "id") Long animalId) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-
-        if (!userService.findUserByName(username).isPresent()){
-            ResponseEntity.status(404).body(new ErrorMessage("No user with such name found, problem with token!"));
-        }
         User user = userService.findUserByName(username).get();
         if (animalService.findById(animalId).isPresent()){
             Animal animal = animalService.findById(animalId).get();

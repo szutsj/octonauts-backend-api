@@ -1,5 +1,10 @@
 package com.octonauts.game.service;
 
+import com.octonauts.game.model.dto.CrewDTO;
+import com.octonauts.game.model.dto.CrewMemberDTO;
+import com.octonauts.game.model.dto.MedicineDTO;
+import com.octonauts.game.model.dto.MedicineStockDTO;
+import com.octonauts.game.model.entity.CrewMember;
 import com.octonauts.game.model.entity.Medicine;
 import com.octonauts.game.model.entity.Octopod;
 import com.octonauts.game.model.enums.MedicineType;
@@ -30,4 +35,18 @@ public class MedicineService {
         return medicineStock;
     }
 
+    public MedicineStockDTO createMedicineList(Octopod octopod) {
+        List<MedicineDTO> medicineDTOS = new ArrayList<>();
+        List<Medicine>  medicines = medicineRepository.findAllByOctopodAndUsedIsFalse(octopod);
+        for(Medicine medicine : medicines){
+            medicineDTOS.add(createMedicineDTO(medicine));
+        }
+        return new MedicineStockDTO(medicineDTOS);
+    }
+
+    public MedicineDTO createMedicineDTO(Medicine medicine){
+        MedicineDTO medicineDTO = new MedicineDTO();
+        medicineDTO.setType(medicine.getType());
+        return medicineDTO;
+    }
 }

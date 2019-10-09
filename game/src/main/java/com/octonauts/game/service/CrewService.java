@@ -1,5 +1,7 @@
 package com.octonauts.game.service;
 
+import com.octonauts.game.model.dto.CrewDTO;
+import com.octonauts.game.model.dto.CrewMemberDTO;
 import com.octonauts.game.model.entity.CrewMember;
 import com.octonauts.game.model.entity.Octopod;
 import com.octonauts.game.model.enums.CrewMembers;
@@ -33,6 +35,22 @@ public class CrewService {
             crew.add(newCrewMember);
         }
         return crew;
-
     }
+
+    public CrewDTO createCrewList(Octopod octopod) {
+        List<CrewMemberDTO> crewMemberDTOList = new ArrayList<>();
+        List<CrewMember>  crew = crewRepository.findAllByOctopod(octopod);
+        for(CrewMember crewMember : crew){
+            crewMemberDTOList.add(createCrewMemberDTO(crewMember));
+        }
+        return new CrewDTO(crewMemberDTOList);
+    }
+
+    public CrewMemberDTO createCrewMemberDTO(CrewMember crewMember){
+        CrewMemberDTO crewMemberDTO = new CrewMemberDTO();
+        crewMemberDTO.setName(crewMember.getName());
+        crewMemberDTO.setActive(crewMember.isActive());
+        return crewMemberDTO;
+    }
+
 }
