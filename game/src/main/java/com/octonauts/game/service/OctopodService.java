@@ -2,15 +2,12 @@ package com.octonauts.game.service;
 
 import com.octonauts.game.contsants.MedicinePrices;
 import com.octonauts.game.model.dto.UserAndPoint;
-import com.octonauts.game.model.entity.Gup;
 import com.octonauts.game.model.entity.Octopod;
 import com.octonauts.game.model.entity.User;
 import com.octonauts.game.repository.OctopodRepository;
 import com.octonauts.game.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class OctopodService {
@@ -53,10 +50,10 @@ public class OctopodService {
     public int recalculatePoints(User user) {
         if (octopodRepository.findByUser(user).isPresent()){
             Octopod octopod = octopodRepository.findByUser(user).get();
-            int total = gupService.pointsPaidForGups(octopod);
+            int total = MedicinePrices.START_MEDICINESTOCK_PRICE;
+            total -= gupService.pointsPaidForGups(octopod);
             total -= medicineService.pointsPaidForMedicines(octopod);
             total -= crewService.pointsPaidForCrew(octopod);
-            total += MedicinePrices.START_MEDICINESTOCK_PRICE;
             if (!user.getPatientTreatedList().isEmpty()){
                 total += animalService.pointsForCure(user);
             }
