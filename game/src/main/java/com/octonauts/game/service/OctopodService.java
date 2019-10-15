@@ -53,14 +53,13 @@ public class OctopodService {
     public int recalculatePoints(User user) {
         if (octopodRepository.findByUser(user).isPresent()){
             Octopod octopod = octopodRepository.findByUser(user).get();
-            int minusPoints = gupService.pointsPaidForGups(octopod);
-            minusPoints += medicineService.pointsPaidForMedicines(octopod);
-            minusPoints += crewService.pointsPaidForCrew(octopod);
-            int plusPoints = MedicinePrices.START_MEDICINESTOCK_PRICE;
+            int total = gupService.pointsPaidForGups(octopod);
+            total -= medicineService.pointsPaidForMedicines(octopod);
+            total -= crewService.pointsPaidForCrew(octopod);
+            total += MedicinePrices.START_MEDICINESTOCK_PRICE;
             if (!user.getPatientTreatedList().isEmpty()){
-                plusPoints += animalService.pointsForCure(user);
+                total += animalService.pointsForCure(user);
             }
-            int total = plusPoints - minusPoints;
             user.setPoints(total);
             userRepository.save(user);
             return total;
