@@ -43,4 +43,10 @@ public class UserService {
         return null;
     }
 
+    public User recalculatePoints(User user){
+        int actualPoints = octopodService.recalculatePoints(user);
+        user.setPoints(actualPoints);
+        return userRepository.save(user);
+    }
+
 }

@@ -8,7 +8,6 @@ import java.util.List;
 public class SicknessDTO {
     private SicknessType type;
     private int level;
-    private int pointGivenForCure;
     private List<MedicineType> medicinesNeeded;
 
     public SicknessDTO() {
@@ -29,15 +28,6 @@ public class SicknessDTO {
     public void setLevel(int level) {
         this.level = level;
     }
-
-    public int getPointGivenForCure() {
-        return pointGivenForCure;
-    }
-
-    public void setPointGivenForCure(int pointGivenForCure) {
-        this.pointGivenForCure = pointGivenForCure;
-    }
-
 
     public List<MedicineType> getMedicinesNeeded() {
         return medicinesNeeded;

@@ -1,6 +1,6 @@
 package com.octonauts.game.model.entity;
 
-import com.octonauts.game.model.entity.sicknessFactory.Sickness;
+import com.octonauts.game.contsants.MedicinePrices;
 import com.octonauts.game.model.enums.MedicineType;
 
 import javax.persistence.*;
@@ -35,25 +35,25 @@ public class Medicine {
 
     private int setPriceByType(MedicineType type) {
         if (type.equals(MedicineType.BANDAGE)){
-            return 2;
+            return MedicinePrices.BANDAGE_PRICE;
         }
         if (type.equals(MedicineType.DIET)){
-            return 1;
+            return MedicinePrices.DIET_PRICE;
         }
         if (type.equals(MedicineType.TEA)){
-            return 1;
+            return MedicinePrices.TEA_PRICE;
         }
         if (type.equals(MedicineType.INJECTION)){
-            return 4;
+            return MedicinePrices.INJECTION_PRICE;
         }
         if (type.equals(MedicineType.OINTMENT)){
-            return 2;
+            return MedicinePrices.OINTMENT_PRICE;
         }
         if (type.equals(MedicineType.PILL)){
-            return 3;
+            return MedicinePrices.PILL_PRICE;
         }
         if (type.equals(MedicineType.RTG)){
-            return 6;
+            return MedicinePrices.RTG_PRICE;
         }
         return 1;
     }

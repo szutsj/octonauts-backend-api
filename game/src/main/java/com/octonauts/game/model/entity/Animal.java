@@ -17,6 +17,7 @@ public class Animal {
     private Sickness sickness;
     private LocalDateTime treatmentStartedAt;
     private LocalDateTime treatmentFinishedAt;
+    private int pointsGivenForCure;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "users_id")
     private User user;
@@ -70,5 +71,13 @@ public class Animal {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public int getPointsGivenForCure() {
+        return pointsGivenForCure;
+    }
+
+    public void setPointsGivenForCure(int pointsGivenForCure) {
+        this.pointsGivenForCure = pointsGivenForCure;
     }
 }

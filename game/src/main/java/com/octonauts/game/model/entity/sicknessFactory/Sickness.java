@@ -15,7 +15,6 @@ public abstract class Sickness {
     private long id;
     private SicknessType type;
     private int level;
-    private int pointsGivenForCure;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "sickness")
     private List<Cure> cureList;
     @OneToOne(cascade = CascadeType.ALL)
@@ -27,7 +26,6 @@ public abstract class Sickness {
 
     public Sickness(int level){
         this.level = level;
-        this.pointsGivenForCure = level * 3;
     }
 
     public long getId() {
@@ -52,14 +50,6 @@ public abstract class Sickness {
 
     public void setLevel(int level) {
         this.level = level;
-    }
-
-    public int getPointsGivenForCure() {
-        return pointsGivenForCure;
-    }
-
-    public void setPointsGivenForCure(int pointsGivenForCure) {
-        this.pointsGivenForCure = pointsGivenForCure;
     }
 
     public List<Cure> getCureList() {

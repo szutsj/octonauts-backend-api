@@ -60,6 +60,7 @@ public class AnimalService {
         PatientDTO patientDTO;
         Sickness sickness = sicknessService.createNewSickness();
         animal.setSickness(sickness);
+        animal.setPointsGivenForCure(sickness.getLevel() * 3);
         animal.setType(randomAnimalTypeGenerator());
         sickness.setAnimal(animalRepository.save(animal));
         sicknessService.save(sickness);
@@ -99,6 +100,7 @@ public class AnimalService {
             if (animal.getTreatmentFinishedAt() != null){
                 patientDTO.setTreatmentFinishedAt(Timestamp.valueOf(animal.getTreatmentFinishedAt()));
             }
+            patientDTO.setPointsGivenForCure(animal.getPointsGivenForCure());
             patientDTO.setSicknessDTO(createSicknessDTO(animal.getSickness()));
         }
         return patientDTO;
@@ -114,9 +116,14 @@ public class AnimalService {
             sicknessDTO.setMedicinesNeeded(cureForSickness);
             sicknessDTO.setType(sickness.getType());
             sicknessDTO.setLevel(sickness.getLevel());
-            sicknessDTO.setPointGivenForCure(sickness.getPointsGivenForCure());
         }
         return sicknessDTO;
     }
 
+    public int pointsForCure(User user) {
+        if (animalRepository.countCurePoints(user, LocalDateTime.now()) == null){
+            return 0;
+        }
+        return animalRepository.countCurePoints(user, LocalDateTime.now());
+    }
 }

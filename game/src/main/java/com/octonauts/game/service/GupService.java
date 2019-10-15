@@ -27,7 +27,7 @@ public class GupService {
         this.gupRepository = gupRepository;
     }
 
-    public List<Gup> initGups(Octopod octopod){
+    public List<Gup> initGups(Octopod octopod) {
         List<Gup> gups = new ArrayList<>();
         for (GupType gupType : GupType.values()) {
             Gup gup = new Gup(gupType, false, octopod);
@@ -41,16 +41,24 @@ public class GupService {
     public GupListDTO createGupList(Octopod octopod) {
         List<GupDTO> gupDTOList = new ArrayList<>();
         List<Gup> gups = gupRepository.findAllByOctopod(octopod);
-        for(Gup gup : gups){
+        for (Gup gup : gups) {
             gupDTOList.add(createGupDTO(gup));
         }
         return new GupListDTO(gupDTOList);
     }
 
-    public GupDTO createGupDTO(Gup gup){
+    public GupDTO createGupDTO(Gup gup) {
         GupDTO gupDTO = new GupDTO();
         gupDTO.setType(gup.getType());
         gupDTO.setActive(gup.isActive());
         return gupDTO;
     }
+
+    public int pointsPaidForGups(Octopod octopod) {
+        if (gupRepository.countPointForActivate(octopod) == null){
+            return 0;
+        }
+        return gupRepository.countPointForActivate(octopod);
+    }
+
 }

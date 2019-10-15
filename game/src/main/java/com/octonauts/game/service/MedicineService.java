@@ -49,4 +49,11 @@ public class MedicineService {
         medicineDTO.setType(medicine.getType());
         return medicineDTO;
     }
+
+    public int pointsPaidForMedicines(Octopod octopod) {
+        if (medicineRepository.countPrices(octopod) == null) {
+            return 0;
+        }
+        return medicineRepository.countPrices(octopod);
+    }
 }

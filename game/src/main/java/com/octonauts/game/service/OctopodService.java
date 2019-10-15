@@ -1,15 +1,22 @@
 package com.octonauts.game.service;
 
+import com.octonauts.game.contsants.MedicinePrices;
+import com.octonauts.game.model.dto.UserAndPoint;
+import com.octonauts.game.model.entity.Gup;
 import com.octonauts.game.model.entity.Octopod;
 import com.octonauts.game.model.entity.User;
 import com.octonauts.game.repository.OctopodRepository;
+import com.octonauts.game.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class OctopodService {
 
     private OctopodRepository octopodRepository;
+    private UserRepository userRepository;
     private CrewService crewService;
     private MedicineService medicineService;
     private GupService gupService;
@@ -17,10 +24,11 @@ public class OctopodService {
     private AnimalService animalService;
 
     @Autowired
-    public OctopodService(OctopodRepository octopodRepository, CrewService crewService,
-                          MedicineService medicineService, GupService gupService,
+    public OctopodService(OctopodRepository octopodRepository, UserRepository userRepository,
+                          CrewService crewService, MedicineService medicineService, GupService gupService,
                           SicknessService sicknessService, AnimalService animalService) {
         this.octopodRepository = octopodRepository;
+        this.userRepository = userRepository;
         this.crewService = crewService;
         this.medicineService = medicineService;
         this.gupService = gupService;
@@ -42,4 +50,29 @@ public class OctopodService {
         return octopodRepository.save(octopod);
     }
 
+    public int recalculatePoints(User user) {
+        if (octopodRepository.findByUser(user).isPresent()){
+            Octopod octopod = octopodRepository.findByUser(user).get();
+            int minusPoints = gupService.pointsPaidForGups(octopod);
+            minusPoints += medicineService.pointsPaidForMedicines(octopod);
+            minusPoints += crewService.pointsPaidForCrew(octopod);
+            int plusPoints = MedicinePrices.START_MEDICINESTOCK_PRICE;
+            if (!user.getPatientTreatedList().isEmpty()){
+                plusPoints += animalService.pointsForCure(user);
+            }
+            int total = plusPoints - minusPoints;
+            user.setPoints(total);
+            userRepository.save(user);
+            return total;
+        }
+        return 0;
+    }
+
+    public UserAndPoint udatePoints(User user) {
+        UserAndPoint userAndPoint = new UserAndPoint();
+        userAndPoint.setUsername(user.getUsername());
+        int actualPoints = recalculatePoints(user);
+        userAndPoint.setPoints(actualPoints);
+        return userAndPoint;
+    }
 }

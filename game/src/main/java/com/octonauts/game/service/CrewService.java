@@ -53,4 +53,10 @@ public class CrewService {
         return crewMemberDTO;
     }
 
+    public int pointsPaidForCrew(Octopod octopod) {
+        if (crewRepository.countPointForActivate(octopod) == null){
+            return 0;
+        }
+        return crewRepository.countPointForActivate(octopod);
+    }
 }

@@ -10,6 +10,7 @@ public class PatientDTO {
     private SicknessDTO sicknessDTO;
     private Timestamp treatmentStartedAt;
     private Timestamp treatmentFinishedAt;
+    private int pointsGivenForCure;
 
     public PatientDTO() {
     }
@@ -53,4 +54,17 @@ public class PatientDTO {
     public void setTreatmentFinishedAt(Timestamp treatmentFinishedAt) {
         this.treatmentFinishedAt = treatmentFinishedAt;
     }
+
+    public Timestamp getTreatmentStartedAt() {
+        return treatmentStartedAt;
+    }
+
+    public int getPointsGivenForCure() {
+        return pointsGivenForCure;
+    }
+
+    public void setPointsGivenForCure(int pointsGivenForCure) {
+        this.pointsGivenForCure = pointsGivenForCure;
+    }
+
 }
