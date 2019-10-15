@@ -35,7 +35,7 @@ public class MedicineController {
 
     @ApiImplicitParams({@ApiImplicitParam(name = "token", value = "Authorization token",
             required = true, dataType = "string", paramType = "header")})
-    @ApiResponses(value = {@ApiResponse(code = 200, message = "OK", response = PatinentListDTO.class)})
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "OK", response = MedicineStockDTO.class)})
     @GetMapping("/octopod/medicines")
     public ResponseEntity<Object> medicineList() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();

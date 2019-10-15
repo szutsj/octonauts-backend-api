@@ -39,10 +39,6 @@ public class PatientDTO {
         this.sicknessDTO = sicknessDTO;
     }
 
-    public Timestamp getTtreatmentStartedAt() {
-        return treatmentStartedAt;
-    }
-
     public void setTreatmentStartedAt(Timestamp treatmentStartedAt) {
         this.treatmentStartedAt = treatmentStartedAt;
     }

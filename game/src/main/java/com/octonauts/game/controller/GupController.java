@@ -33,7 +33,7 @@ public class GupController {
 
     @ApiImplicitParams({@ApiImplicitParam(name = "token", value = "Authorization token",
             required = true, dataType = "string", paramType = "header")})
-    @ApiResponses(value = {@ApiResponse(code = 200, message = "OK", response = PatinentListDTO.class)})
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "OK", response = GupListDTO.class)})
     @GetMapping("/octopod/gups")
     public ResponseEntity<Object> gupList() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
