@@ -7,13 +7,16 @@ import com.octonauts.game.model.dto.GupListDTO;
 import com.octonauts.game.model.entity.CrewMember;
 import com.octonauts.game.model.entity.Gup;
 import com.octonauts.game.model.entity.Octopod;
+import com.octonauts.game.model.entity.User;
 import com.octonauts.game.model.enums.GupType;
 import com.octonauts.game.repository.GupRepository;
+import com.octonauts.game.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.graalvm.compiler.options.OptionType.User;
 
@@ -21,10 +24,12 @@ import static org.graalvm.compiler.options.OptionType.User;
 public class GupService {
 
     private GupRepository gupRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    public GupService(GupRepository gupRepository) {
+    public GupService(GupRepository gupRepository, UserRepository userRepository) {
         this.gupRepository = gupRepository;
+        this.userRepository = userRepository;
     }
 
     public List<Gup> initGups(Octopod octopod) {
@@ -59,6 +64,19 @@ public class GupService {
             return 0;
         }
         return gupRepository.countPointForActivate(octopod);
+    }
+
+    public GupDTO activate(Gup gup) {
+        User user = gup.getOctopod().getUser();
+        user.setPoints(user.getPoints() - gup.getPointsForActivate());
+        userRepository.save(user);
+        gup.setActive(true);
+        gupRepository.save(gup);
+        return createGupDTO(gup);
+    }
+
+    public Optional<Gup> findById(Long gupId){
+        return gupRepository.findById(gupId);
     }
 
 }

@@ -57,7 +57,7 @@ public class CrewController {
         if (crewService.findById(crewMemberId).isPresent()){
             CrewMember crewMember = crewService.findById(crewMemberId).get();
             if (crewMember.isActive()){
-                return ResponseEntity.status(409).body(new ErrorMessage("This crew member is already active!"));
+                return ResponseEntity.status(410).body(new ErrorMessage("This crew member is already active!"));
             }
             user = userService.recalculatePoints(user);
             if (user.getPoints() < crewMember.getPointsForActivate()){
